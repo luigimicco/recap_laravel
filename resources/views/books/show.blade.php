@@ -7,7 +7,7 @@
         @if (session('message'))
         <div class="row">
             <div class="col-12">
-                <div class="alert alert-{{ session('alert-type') }}">{{ session('message') }}</div>    
+                <div class="alert alert-{{ session('alert-type') }}">{{ session('alert-message') }}</div>    
             </div>
         </div>    
         @endif
@@ -17,12 +17,12 @@
 
                 <div class="card">
                     <div class="card-header ">
-                        <a href="{{ route('books.edit', $book->id) }}" class="btn btn-warning">Edit</a>
+                        <a href="{{ route('books.edit', $book->id) }}" class="btn btn-warning"><i class="fa-solid fa-edit"></i>&nbsp;Edit</a>
                         <form class="d-inline delete" action="{{ route('books.destroy', $book->id) }}" method="POST"
                             data-element-name="{{ $book->title }}">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger">Delete</button>
+                            <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i>&nbsp;Delete</button>
                         </form>
                     </div>
                     <div class="card-body">

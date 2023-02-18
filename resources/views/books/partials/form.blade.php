@@ -98,8 +98,8 @@
         </div>
       </div>
       <div class="card-footer">
-        <a href="{{ route('books.index')}}" class="btn btn-dark">Cancel</a>
-        <button type="submit" class="btn btn-success {{$btnClass}}">Submit</button>
+        <a href="{{ route('books.index')}}" class="btn btn-dark"><i class="fa-solid fa-redo"></i>&nbsp;Cancel</a>
+        <button type="submit" class="btn btn-success {{$btnClass}}"><i class="fa-solid fa-save"></i>&nbsp;Submit</button>
       </div>
     </div>
 </form>

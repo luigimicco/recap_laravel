@@ -1,13 +1,11 @@
 @extends('layouts/app')
 
+@include('partials.popup')
+
 @section('main-content')
     <section class="container">
         <div class="row">
-            @if (session('message'))
-                <div class="alert {{session('alert-type')}}">
-                    {{session('message')}}
-                </div>
-            @endif
+
             <div class="col-12 ">
                 <div class="card">
                     <div class="card-header">
@@ -30,13 +28,13 @@
                                         <th>{{ $book->ISBN }}</th>
                                         <td>{{ $book->title }}</td>
                                         <td>{{ $book->author }}</td>
-                                        <td>{{ $book->soldout }}</td>
+                                        <td>{{$book->soldout ? 'soldout': '' }}</td>
                                         <td>
-                                            <a href="{{ route('books.restore', $book->id) }}" class="btn btn-success">Restore</a>
-                                            <form class="d-inline delete" action="{{route('books.force-delete', $book->id)}}" method="POST" data-element-name="{{ $book->title }}">
+                                            <a href="{{ route('books.restore', $book->id) }}" class="btn btn-success" title="restore"><i class="fa-solid fa-recycle"></i></a>
+                                            <form class="d-inline delete double-confirm" action="{{route('books.force-delete', $book->id)}}" method="POST" data-element-name="{{ $book->title }}">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                                <button type="submit" class="btn btn-danger" title="delete"><i class="fa-solid fa-trash"></i></button>
                                             </form>
                                         </td>
                                     </tr>

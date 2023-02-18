@@ -1,19 +1,26 @@
 @extends('layouts/app')
 
 @section('main-content')
+
+    @include('partials.popup')
+
     <section class="container">
         <div class="row">
 
-            @if (session('message'))
-                <div class="alert {{session('alert-type')}}">
-                    {{session('message')}}
-                </div>
-            @endif
             <div class="col-12 ">
 
                 <div class="card">
                     <div class="card-header">
-                        <h2>List books</h2>
+                        <div class="row">
+                            <div class="col-6">
+                                <h2>List books</h2>
+                            </div>
+                            <div class="col-6 text-end">
+                                @if ($trashed)
+                                <a  class="btn btn-primary" href="{{ route('books.trashed') }}">{{$trashed}} item/s in recycled bin</a>
+                                @endif                                
+                            </div>
+                        </div>
                     </div>
                     <div class="card-body">                
                         <table class="table table-condensed table-striped">
@@ -26,7 +33,7 @@
                                     <th scope="col">Price</th>
                                     <th scope="col">Year</th>
                                     <th scope="col">Soldaout</th>
-                                    <th scope="col"><a href="{{ route('books.create') }}" class="btn btn-warning">Create new
+                                    <th scope="col"><a href="{{ route('books.create') }}" class="btn btn-warning"><i class="fa-solid fa-plus"></i>&nbsp;Create new
                                             book</a></th>
                                 </tr>
                             </thead>
@@ -39,14 +46,18 @@
                                         <td>{{ $book->pages }}</td>
                                         <td>{{ $book->price }}</td>
                                         <td>{{ $book->year }}</td>
-                                        <td>{{ $book->soldout }}</td>
+                                        <td><form action="{{ route('books.toggle', $book->id) }}" method="POST">
+                                                @method('PATCH')
+                                                @csrf
+                                                <button type="submit" title="{{$book->soldout ? 'stock' : 'soldout' }}" class="btn btn-outline" ><i class="fa-2x fa-solid fas fa-fw {{$book->soldout ? 'fa-toggle-on' : 'fa-toggle-off' }}"></i></button>
+                                            </form></td>
                                         <td>
-                                            <a href="{{ route('books.show', $book->id) }}" class="btn btn-success">Show</a>
-                                            <a href="{{ route('books.edit', $book->id) }}" class="btn btn-primary">Edit</a>
+                                            <a href="{{ route('books.show', $book->id) }}" class="btn btn-success" title="show"><i class="fa-solid fa-eye"></i></a>
+                                            <a href="{{ route('books.edit', $book->id) }}" class="btn btn-primary" title="edit"><i class="fa-solid fa-edit"></i></a>
                                             <form class="d-inline delete" action="{{route('books.destroy', $book->id)}}" method="POST" data-element-name="{{ $book->title }}">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                                <button type="submit" class="btn btn-danger" title="delete"><i class="fa-solid fa-trash"></i></button>
                                             </form>
                                         </td>
                                     </tr>
