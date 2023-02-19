@@ -15,10 +15,12 @@
                                 <h2>Recycled bin</h2>
                             </div>
                             <div class="col-6 text-end">
+                                @if (count($books))
                                 <form class="d-inline delete double-confirm" action="{{route('books.restore-all')}}" method="POST" >
                                     @csrf
                                     <button type="submit" class="btn btn-primary" title="restore all"><i class="fa-solid fa-recycle"></i>&nbsp;Restore all</button>
-                                </form>                               
+                                </form>            
+                                @endif                   
                             </div>
                         </div>
                     </div>
