@@ -9,7 +9,18 @@
             <div class="col-12 ">
                 <div class="card">
                     <div class="card-header">
-                        <h2>Recycled bin</h2>
+
+                        <div class="row">
+                            <div class="col-6">
+                                <h2>Recycled bin</h2>
+                            </div>
+                            <div class="col-6 text-end">
+                                <form class="d-inline delete double-confirm" action="{{route('books.restore-all')}}" method="POST" >
+                                    @csrf
+                                    <button type="submit" class="btn btn-primary" title="restore all"><i class="fa-solid fa-recycle"></i>&nbsp;Restore all</button>
+                                </form>                               
+                            </div>
+                        </div>
                     </div>
                     <div class="card-body">
                         <table class="table table-condensed table-striped">
@@ -29,7 +40,7 @@
                                         <td>{{ $book->title }}</td>
                                         <td>{{ $book->author }}</td>
                                         <td>{{$book->soldout ? 'soldout': '' }}</td>
-                                        <td>
+                                        <td class="text-end">
                                             <a href="{{ route('books.restore', $book->id) }}" class="btn btn-success" title="restore"><i class="fa-solid fa-recycle"></i></a>
                                             <form class="d-inline delete double-confirm" action="{{route('books.force-delete', $book->id)}}" method="POST" data-element-name="{{ $book->title }}">
                                                 @csrf
@@ -47,6 +58,9 @@
                             </tbody>
                         </table>
         
+                    </div>
+                    <div class="card-footer text-end">
+                        <b>{{count($books)}}</b> item/s
                     </div>
                 </div>
             </div>

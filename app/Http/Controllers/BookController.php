@@ -136,6 +136,10 @@ class BookController extends Controller
 
         $request->validate($newRules, $this->messages);
 
+        if (!array_key_exists('soldout', $data)) {
+            $data['soldout'] = false;
+        }
+
         //$book = Book::findOrFail($id);
         $book->update($data);
         return redirect()->route('books.index', compact('book'))->with('alert-message', "Updated: ($book->title) ")->with('alert-type', 'success');
@@ -177,6 +181,18 @@ class BookController extends Controller
     {
         Book::where('id', $id)->withTrashed()->restore();
         return redirect()->route('books.index')->with('alert-message', "Restored successfully")->with('alert-type', 'success');
+    }
+
+
+    /**
+     * Restore all archived books
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    public function restoreAll()
+    {
+        Book::onlyTrashed()->restore();
+        return redirect()->route('books.index')->with('alert-message', "All books restored successfully")->with('alert-type', 'success');
     }
 
     /**

@@ -22,7 +22,7 @@ deleteBtns.forEach((formDelete) => {
     var doubleconfirm = event.target.classList.contains('double-confirm');
     Swal.fire({
       title: 'Are you sure ?',
-      text: "This operation is irreversible !",
+      text: "Please confirm your request !",
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
