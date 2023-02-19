@@ -23,7 +23,7 @@ Route::get('/', function () {
 */
 Route::patch('/books/{book}/toggle', [BooksController::class, 'enableToggle'])->name('books.toggle');
 Route::get('/books/trashed', [BooksController::class, 'trashed'])->name('books.trashed');
-Route::get('/books/{book}/restore', [BooksController::class, 'restore'])->name('books.restore');
+Route::post('/books/{book}/restore', [BooksController::class, 'restore'])->name('books.restore');
 Route::delete('/books/{book}/force-delete', [BooksController::class, 'forceDelete'])->name('books.force-delete');
 Route::post('/books/restore-all', [BooksController::class, 'restoreAll'])->name('books.restore-all');
 

@@ -27,8 +27,7 @@
                             <div class="col-4 text-end">
                                 <a href="{{ route('books.index') }}" class="btn btn-success"><i class="fa-solid fa-arrow-left"></i></i>&nbsp;Books</a>
                                 <a href="{{ route('books.edit', $book->id) }}" class="btn btn-warning"><i class="fa-solid fa-edit"></i>&nbsp;Edit</a>
-                                <form class="d-inline delete" action="{{ route('books.destroy', $book->id) }}" method="POST"
-                                    data-element-name="{{ $book->title }}">
+                                <form class="d-inline delete" action="{{ route('books.destroy', $book->id) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i>&nbsp;Delete</button>

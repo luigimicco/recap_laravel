@@ -41,8 +41,11 @@
                                         <td>{{ $book->author }}</td>
                                         <td>{{$book->soldout ? 'soldout': '' }}</td>
                                         <td class="text-end">
-                                            <a href="{{ route('books.restore', $book->id) }}" class="btn btn-success" title="restore"><i class="fa-solid fa-recycle"></i></a>
-                                            <form class="d-inline delete double-confirm" action="{{route('books.force-delete', $book->id)}}" method="POST" data-element-name="{{ $book->title }}">
+                                            <form class="d-inline" action="{{route('books.restore', $book->id)}}" method="POST">
+                                                @csrf
+                                                <button type="submit" class="btn btn-success" title="restore"><i class="fa-solid fa-recycle"></i></button>
+                                            </form>                                            
+                                            <form class="d-inline delete double-confirm" action="{{route('books.force-delete', $book->id)}}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-danger" title="delete"><i class="fa-solid fa-trash"></i></button>
