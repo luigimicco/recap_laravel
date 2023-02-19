@@ -54,10 +54,15 @@ class BookController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
 
-        $books = Book::all();
+        $sort = $request->sort ?? '';
+        if ($sort) {
+            $books = Book::all()->sortBy($sort);
+        } else {
+            $books = Book::all();
+        }
         $trashed = Book::onlyTrashed()->get()->count();
         return view('books.index', compact('books', 'trashed'));
     }

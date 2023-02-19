@@ -28,13 +28,13 @@
                         <table class="table table-condensed table-striped">
                             <thead>
                                 <tr>
-                                    <th scope="col">ISBN</th>
-                                    <th scope="col">Title</th>
-                                    <th scope="col">Author</th>
-                                    <th scope="col">Pages</th>
-                                    <th scope="col">Price</th>
-                                    <th scope="col">Year</th>
-                                    <th scope="col">Soldaout</th>
+                                    <th scope="col"><a  class="btn btn-link" href="{{ route('books.index', "sort=ISBN") }}">ISBN</a></th>
+                                    <th scope="col"><a  class="btn btn-link" href="{{ route('books.index', "sort=title") }}">Title</a></th>
+                                    <th scope="col"><a  class="btn btn-link" href="{{ route('books.index', "sort=author") }}">Author</a></th>
+                                    <th scope="col"><a  class="btn btn-link" href="{{ route('books.index', "sort=pages") }}">Pages</a></th>
+                                    <th scope="col"><a  class="btn btn-link" href="{{ route('books.index', "sort=price") }}">Price</a></th>
+                                    <th scope="col"><a  class="btn btn-link" href="{{ route('books.index', "sort=year") }}">Year</a></th>
+                                    <th scope="col"><a  class="btn btn-link" href="{{ route('books.index', "sort=soldout") }}">Soldout</a></th>
                                     <th scope="col"></th>
                                 </tr>
                             </thead>
