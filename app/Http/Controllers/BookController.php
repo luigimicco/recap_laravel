@@ -135,6 +135,10 @@ class BookController extends Controller
 
         $request->validate($newRules, $this->messages);
 
+        if (!array_key_exists('soldout', $data)) {
+            $data['soldout'] = false;
+        }
+
         //$book = Book::findOrFail($id);
         $book->update($data);
         return redirect()->route('books.index', compact('book'))->with('message', "Updated: ($book->title) ")->with('alert-type', 'alert-success');
