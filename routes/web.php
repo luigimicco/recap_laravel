@@ -21,10 +21,13 @@ Route::get('/', function () {
 /*
 
 */
-Route::patch('/books/{book}/toggle', [BooksController::class, 'enableToggle'])->name('books.toggle');
-Route::get('/books/trashed', [BooksController::class, 'trashed'])->name('books.trashed');
-Route::post('/books/{book}/restore', [BooksController::class, 'restore'])->name('books.restore');
-Route::delete('/books/{book}/force-delete', [BooksController::class, 'forceDelete'])->name('books.force-delete');
-Route::post('/books/restore-all', [BooksController::class, 'restoreAll'])->name('books.restore-all');
+
+Route::name('books.')->prefix('books')->group(function () {
+    Route::patch('/{book}/toggle', [BooksController::class, 'enableToggle'])->name('toggle');
+    Route::get('/trashed', [BooksController::class, 'trashed'])->name('trashed');
+    Route::post('/{book}/restore', [BooksController::class, 'restore'])->name('restore');
+    Route::delete('/{book}/force-delete', [BooksController::class, 'forceDelete'])->name('force-delete');
+    Route::post('/restore-all', [BooksController::class, 'restoreAll'])->name('restore-all');
+});
 
 Route::resource('/books', BooksController::class);
