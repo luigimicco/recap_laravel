@@ -25,7 +25,7 @@
                                     <th scope="col">Pages</th>
                                     <th scope="col">Price</th>
                                     <th scope="col">Year</th>
-                                    <th scope="col">Soldaout</th>
+                                    <th scope="col">Soldout</th>
                                     <th scope="col"><a href="{{ route('books.create') }}" class="btn btn-warning">Create new
                                             book</a></th>
                                 </tr>
