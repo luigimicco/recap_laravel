@@ -1,7 +1,5 @@
 @if ($errors->any())
-    <div class="alert alert-danger">
-        <h3>Check errors</h3>
-    </div>
+    <div id="popup_message" class="d-none" data-type="warning" data-message="Check errors"></div>
 @endif
 
 <form action="{{ route($route, $book->id) }}" id="{{$idForm}}" method="POST">
@@ -97,10 +95,13 @@
           <label class="form-check-label" for="soldout">Soldout</label>
         </div>
       </div>
-      <div class="card-footer">
-        <a href="{{ route('books.index')}}" class="btn btn-dark">Cancel</a>
-        <button type="submit" class="btn btn-success {{$btnClass}}">Submit</button>
+      <div class="card-footer text-end">
+        <a href="{{ route('books.index')}}" class="btn btn-dark"><i class="fa-solid fa-arrow-left"></i>&nbsp;Cancel</a>
+        <button type="submit" class="btn btn-success {{$btnClass}}"><i class="fa-solid fa-save"></i>&nbsp;Submit</button>
       </div>
     </div>
 </form>
 
+@section('script')
+    @vite('resources/js/confirmDelete.js')
+@endsection

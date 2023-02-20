@@ -54,11 +54,17 @@ class BookController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
 
-        $books = Book::all();
-        return view('books.index', compact('books'));
+        $sort = $request->sort ?? '';
+        if ($sort) {
+            $books = Book::all()->sortBy($sort);
+        } else {
+            $books = Book::all();
+        }
+        $trashed = Book::onlyTrashed()->get()->count();
+        return view('books.index', compact('books', 'trashed'));
     }
 
 
@@ -141,7 +147,7 @@ class BookController extends Controller
 
         //$book = Book::findOrFail($id);
         $book->update($data);
-        return redirect()->route('books.index', compact('book'))->with('message', "Updated: ($book->title) ")->with('alert-type', 'alert-success');
+        return redirect()->route('books.index', compact('book'))->with('alert-message', "Updated: ($book->title) ")->with('alert-type', 'success');
     }
 
     /**
@@ -154,7 +160,7 @@ class BookController extends Controller
     {
         $book->delete();
 
-        return redirect()->route('books.index')->with('message', 'Moved to recycled bin')->with('alert-type', 'alert-danger');
+        return redirect()->route('books.index')->with('alert-message', 'Moved to recycled bin')->with('alert-type', 'info');
     }
 
     /**
@@ -179,7 +185,19 @@ class BookController extends Controller
     public function restore($id)
     {
         Book::where('id', $id)->withTrashed()->restore();
-        return redirect()->route('books.index')->with('message', "Restored successfully")->with('alert-type', 'alert-success');
+        return redirect()->route('books.index')->with('alert-message', "Restored successfully")->with('alert-type', 'success');
+    }
+
+
+    /**
+     * Restore all archived books
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    public function restoreAll()
+    {
+        Book::onlyTrashed()->restore();
+        return redirect()->route('books.index')->with('alert-message', "All books restored successfully")->with('alert-type', 'success');
     }
 
     /**
@@ -192,6 +210,21 @@ class BookController extends Controller
     public function forceDelete($id)
     {
         Book::where('id', $id)->withTrashed()->forceDelete();
-        return redirect()->route('books.index')->with('message', "Delete definitely")->with('alert-type', 'alert-success');
+        return redirect()->route('books.trashed')->with('alert-message', "Delete definitely")->with('alert-type', 'success');
+    }
+
+    /**
+     * Toggle on soldout field.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function enableToggle(Book $book)
+    {
+        $book->soldout = !$book->soldout;
+        $book->save();
+
+        $message = ($book->soldout) ? "soldout" : "stock";
+        return redirect()->back()->with('alert-type', 'success')->with('alert-message', "$book->title:&nbsp;<b>$message</b>");
     }
 }

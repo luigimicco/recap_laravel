@@ -7,7 +7,7 @@
         @if (session('message'))
         <div class="row">
             <div class="col-12">
-                <div class="alert alert-{{ session('alert-type') }}">{{ session('message') }}</div>    
+                <div class="alert alert-{{ session('alert-type') }}">{{ session('alert-message') }}</div>    
             </div>
         </div>    
         @endif
@@ -17,13 +17,24 @@
 
                 <div class="card">
                     <div class="card-header ">
-                        <a href="{{ route('books.edit', $book->id) }}" class="btn btn-warning">Edit</a>
-                        <form class="d-inline delete" action="{{ route('books.destroy', $book->id) }}" method="POST"
-                            data-element-name="{{ $book->title }}">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger">Delete</button>
-                        </form>
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="card-title">
+                                    <h2>{{ $book->title }}</h2>
+                                </div>
+
+                            </div>
+                            <div class="col-4 text-end">
+                                <a href="{{ route('books.index') }}" class="btn btn-success"><i class="fa-solid fa-arrow-left"></i></i>&nbsp;Books</a>
+                                <a href="{{ route('books.edit', $book->id) }}" class="btn btn-warning"><i class="fa-solid fa-edit"></i>&nbsp;Edit</a>
+                                <form class="d-inline delete" action="{{ route('books.destroy', $book->id) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i>&nbsp;Delete</button>
+                                </form>
+                            </div>
+                        </div>
+
                     </div>
                     <div class="card-body">
                         <div class="row">
@@ -33,15 +44,13 @@
                                 </div> 
                             </div>                
                             <div class="col-3">
-                                <div class="card-title">
-                                    <h3>{{ $book->ISBN }}</h3>
-                                    <h2>{{ $book->title }}</h2>
-                                </div>
-
-                                <div>pages: <b>{{ $book->pages }}</b></div>
-                                <div>price: <b>{{ $book->price }} &euro;</b></div>
-                                <div>year: <b>{{ $book->year }}</b></div>
-                                <div ><h3>{{ $book->author }}</h3></div>
+                                <table width="100%">
+                                    <tr><td width="25%">ISBN</td><td><b>{{ $book->ISBN }}</b></td></tr>
+                                    <tr><td>author</td><td><b>{{ $book->author }}</b></td></tr>
+                                    <tr><td>pages</td><td><b>{{ $book->pages }}</b></td></tr>
+                                    <tr><td>price</td><td><b>{{ $book->price }}</b></td></tr>
+                                    <tr><td>year</td><td><b>{{ $book->year }}</b></td></tr>
+                                </table>
                             </div>
                         </div>
 
